@@ -7,8 +7,7 @@
     update_cache: yes
 
 - name: Set openvpn configurations
-  command:
-    name: "{{ item }}"
+  command: "/usr/local/openvpn_as/scripts/sacli --key {{ item.key }} --value {{ item.value }} ConfigPut"
   environment:
     public_hostname: "{{ openvpn_hostname }}"
     admin_user: "{{ openvpn_admin_username }}"
@@ -16,12 +15,23 @@
     reroute_gw: '1'
     reroute_dns: '1'
   with_items:
-    - "/usr/local/openvpn_as/scripts/sacli --key vpn.client.tls_version_min --value 1.2 ConfigPut"
-    - "/usr/local/openvpn_as/scripts/sacli --key vpn.client.tls_version_min_strict --value true ConfigPut"
-    - "/usr/local/openvpn_as/scripts/sacli --key vpn.server.tls_version_min --value 1.2 ConfigPut"
-    - "/usr/local/openvpn_as/scripts/sacli --key cs.tls_version_min --value 1.2 ConfigPut"
-    - "/usr/local/openvpn_as/scripts/sacli --key cs.tls_version_min_strict --value true ConfigPut"
-    - "/usr/local/openvpn_as/scripts/sacli --key vpn.client.config_text --value 'cipher AES-256-CBC' ConfigPut"
-    - "/usr/local/openvpn_as/scripts/sacli --key vpn.server.config_text --value 'cipher AES-256-CBC' ConfigPut"
+    - key: vpn.client.tls_version_min
+      value: 1.2
+    - key: vpn.client.tls_version_min_strict
+      value: true
+    - key: vpn.server.tls_version_min
+      value: 1.2
+    - key: cs.tls_version_min
+      value: 1.2
+    - key: cs.tls_version_min_strict
+      value: true
+    - key: vpn.client.config_text 
+      value: "'cipher AES-256-CBC'"
+    - key: vpn.server.config_text
+      value: "'cipher AES-256-CBC'"
+
+- name: Restart and set username
+  command: "{{ item }}"
+  with_items:
     - "/usr/local/openvpn_as/scripts/sacli start"
     - "/usr/local/openvpn_as/scripts/ovpnpasswd -u {{ openvpn_admin_username }} -p {{ openvpn_admin_password }}"
