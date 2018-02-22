@@ -1,0 +1,6 @@
+---
+# defaults file for ansible-role-openvpn-debian
+
+openvpn_hostname: openvpn.cloud.faizalsidek.com
+openvpn_admin_username: openvpn
+openvpn_admin_password: changeme
