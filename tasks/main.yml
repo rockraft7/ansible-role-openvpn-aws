@@ -15,20 +15,13 @@
     reroute_gw: '1'
     reroute_dns: '1'
   with_items:
-    - key: vpn.client.tls_version_min
-      value: 1.2
-    - key: vpn.client.tls_version_min_strict
-      value: true
-    - key: vpn.server.tls_version_min
-      value: 1.2
-    - key: cs.tls_version_min
-      value: 1.2
-    - key: cs.tls_version_min_strict
-      value: true
-    - key: vpn.client.config_text 
-      value: "'cipher AES-256-CBC'"
-    - key: vpn.server.config_text
-      value: "'cipher AES-256-CBC'"
+    - { key: vpn.client.tls_version_min, value: 1.2 }
+    - { key: vpn.client.tls_version_min_strict, value: true}
+    - { key: vpn.server.tls_version_min, value: 1.2 }
+    - { key: cs.tls_version_min, value: 1.2 }
+    - { key: cs.tls_version_min_strict, value: true }
+    - { key: vpn.client.config_text, value: "'cipher AES-256-CBC'" }
+    - { key: vpn.server.config_text, value: "'cipher AES-256-CBC'" }
 
 - name: Restart and set username
   command: "{{ item }}"
