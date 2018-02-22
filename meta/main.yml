@@ -8,7 +8,7 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-      - 7
+      - wheezy
 
   galaxy_tags:
     - development
